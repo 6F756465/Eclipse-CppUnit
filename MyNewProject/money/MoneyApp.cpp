@@ -2,7 +2,8 @@
 #include <cppunit/CompilerOutputter.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
 #include <cppunit/ui/text/TestRunner.h>
-
+#include <cppunit/XmlOutputter.h>
+#include <fstream>
 
 int main(int argc, char* argv[])
 {
@@ -14,8 +15,12 @@ int main(int argc, char* argv[])
   runner.addTest( suite );
 
   // Change the default outputter to a compiler error format outputter
-  runner.setOutputter( new CPPUNIT_NS::CompilerOutputter( &runner.result(),
-                                                          CPPUNIT_NS::stdCOut() ) );
+  //runner.setOutputter( new CPPUNIT_NS::CompilerOutputter( &runner.result(),
+                                                        // CPPUNIT_NS::stdCOut() ) );
+ std::ofstream file;
+ file.open("output.xml");
+
+  runner.setOutputter(new CPPUNIT_NS::XmlOutputter(&runner.result(),file));
   // Run the test.
   bool wasSucessful = runner.run();
 
